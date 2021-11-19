@@ -1,10 +1,10 @@
 ### YamlMime:Yaml
-ms.openlocfilehash: 32819343100f4d8212e660497c1dd9a1e652711a
-ms.sourcegitcommit: f3937681c3f6e310355071e1842967695e365751
-ms.translationtype: HT
-ms.contentlocale: es-ES
-ms.lasthandoff: 10/29/2021
-ms.locfileid: "130761808"
+### ms.openlocfilehash: 32819343100f4d8212e660497c1dd9a1e652711a
+### ms.sourcegitcommit: f3937681c3f6e310355071e1842967695e365751
+### ms.translationtype: HT
+### ms.contentlocale: es-ES
+### ms.lasthandoff: 10/29/2021
+### ms.locfileid: "130761808"
 parameters:
   buildConfiguration: Release
 steps:
