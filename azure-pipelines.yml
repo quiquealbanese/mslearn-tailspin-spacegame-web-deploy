@@ -1,5 +1,5 @@
 ### YamlMime:Yaml
-ms.openlocfilehash: 3021ff59990a44d5d0e71b5a887f4570c79b69f4
+ms.openlocfilehash: e8e0c0487370439eb50ee376aa05769b8455f241
 ms.sourcegitcommit: f3937681c3f6e310355071e1842967695e365751
 ms.translationtype: HT
 ms.contentlocale: es-ES
@@ -13,35 +13,31 @@ pool:
   - npm
 variables:
   buildConfiguration: Release
-  wwwrootDir: Tailspin.SpaceGame.Web/wwwroot
-  dotnetSdkVersion: 5.x
 steps:
 - task: UseDotNet@2
-  displayName: Use .NET SDK $(dotnetSdkVersion)
+  displayName: Use .NET SDK 5.x
   inputs:
-    version: $(dotnetSdkVersion)
+    packageType: sdk
+    version: 5.x
 - task: Npm@1
   displayName: Run npm install
   inputs:
     verbose: false
-- script: ./node_modules/.bin/node-sass $(wwwrootDir) --output $(wwwrootDir)
+- script: ./node_modules/.bin/node-sass Tailspin.SpaceGame.Web/wwwroot --output Tailspin.SpaceGame.Web/wwwroot
   displayName: Compile Sass assets
 - task: gulp@1
   displayName: Run gulp tasks
 - script: echo "$(Build.DefinitionName), $(Build.BuildId), $(Build.BuildNumber)" > buildinfo.txt
   displayName: Write build info
-  workingDirectory: $(wwwrootDir)
+  workingDirectory: Tailspin.SpaceGame.Web/wwwroot
 - task: DotNetCoreCLI@2
   displayName: Restore project dependencies
   inputs:
     command: restore
     projects: '**/*.csproj'
-- template: templates/build.yml
-  parameters:
-    buildConfiguration: Debug
-- template: templates/build.yml
-  parameters:
-    buildConfiguration: Release
-- task: PublishBuildArtifacts@1
-  displayName: 'Publish Artifact: drop'
-  condition: succeeded()
+- task: DotNetCoreCLI@2
+  displayName: Build the project - Release
+  inputs:
+    command: build
+    arguments: --no-restore --configuration Release
+    projects: '**/*.csproj'
